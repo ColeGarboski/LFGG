@@ -1,4 +1,4 @@
-package com.example.lfggandroidstudio
+package com.example.lfgg
 
 import org.junit.Test
 

@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "LFGG Android Studio"
+rootProject.name = "LFGG"
 include ':app'
