@@ -50,7 +50,7 @@ class Login : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     //Logging in user logic
-                    val intent = Intent(this@Login, MainActivity::class.java)
+                    val intent = Intent(this@Login, MainActivity::class.java) // Switch to whatever screen you want to show up after initial login
                     startActivity(intent)
                 } else {
                     Toast.makeText(this@Login, "User or password is incorrect", Toast.LENGTH_SHORT).show()

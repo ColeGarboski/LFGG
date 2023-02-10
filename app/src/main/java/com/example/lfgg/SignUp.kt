@@ -45,7 +45,7 @@ class SignUp : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Jump to Login screen
-                    val intent = Intent(this@SignUp, MainActivity::class.java)
+                    val intent = Intent(this@SignUp, Login::class.java)
                     startActivity(intent)
                 } else {
                     Toast.makeText(this@SignUp, "An error has occurred", Toast.LENGTH_SHORT).show()
