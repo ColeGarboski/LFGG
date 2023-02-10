@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "340164270368",
+    "project_id": "lfgg-2e140",
+    "storage_bucket": "lfgg-2e140.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340164270368:android:5b278b21be51f2a7c81f45",
+        "android_client_info": {
+          "package_name": "com.example.lfgg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340164270368-6dhkckas6pvqm0uvbcecrms719fre162.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlIMqfvBZYBVf-D-aHBTTEpI1mViwZ8l0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340164270368-6dhkckas6pvqm0uvbcecrms719fre162.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
