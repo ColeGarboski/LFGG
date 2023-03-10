@@ -15,6 +15,7 @@ class Login : AppCompatActivity() {
     private lateinit var edtPassword: EditText
     private lateinit var btnLogin: Button
     private lateinit var btnSignUp: Button
+    private lateinit var btnForgotPassword: Button
     private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +28,7 @@ class Login : AppCompatActivity() {
         edtPassword = findViewById(R.id.edt_password)
         btnLogin = findViewById(R.id.btnLogin)
         btnSignUp = findViewById(R.id.btnSignup)
+        btnForgotPassword = findViewById(R.id.btnForgotPassword)
 
         btnSignUp.setOnClickListener {
             val intent = Intent(this, SignUp::class.java)
@@ -37,7 +39,12 @@ class Login : AppCompatActivity() {
             val email = edtEmail.text.toString()
             val password = edtPassword.text.toString()
 
-            login(email, password);
+            login(email, password)
+        }
+
+        btnForgotPassword.setOnClickListener {
+            val intent = Intent(this, ForgotPassword::class.java)
+            startActivity(intent)
         }
 
 
@@ -52,9 +59,10 @@ class Login : AppCompatActivity() {
                     //Logging in user logic
                     val intent = Intent(this@Login, MainActivity::class.java) // Switch to whatever screen you want to show up after initial login
                     finish()
+
                     startActivity(intent)
                 } else {
-                    Toast.makeText(this@Login, "User or password is incorrect", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Username or Password is incorrect", Toast.LENGTH_SHORT).show()
                 }
             }
     }

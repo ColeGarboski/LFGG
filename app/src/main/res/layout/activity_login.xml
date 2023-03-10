@@ -45,5 +45,14 @@
         android:layout_centerHorizontal="true">
     </Button>
 
+    <Button
+        android:id="@+id/btnForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnSignup"
+        android:layout_marginTop="100dp"
+        android:text="Forgot Password?"
+        android:layout_centerHorizontal="true">
+    </Button>
 
 </RelativeLayout>
