@@ -13,7 +13,7 @@ import com.google.firebase.database.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var userRecyclerView: RecyclerView
-    private lateinit var userList: ArrayList<User>
+    private lateinit var chatList: ArrayList<ChatObject>
     private lateinit var adapter: UserAdapter
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDbRef: DatabaseReference
@@ -23,19 +23,18 @@ class MainActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
         mDbRef = FirebaseDatabase.getInstance().reference
-        userList = ArrayList()
-        adapter = UserAdapter(this, userList)
+        chatList = ArrayList()
+        adapter = UserAdapter(this, chatList)
         userRecyclerView = findViewById(R.id.userRecyclerView)
         userRecyclerView.layoutManager = LinearLayoutManager(this)
         userRecyclerView.adapter = adapter
-        mDbRef.child("user").addValueEventListener(object : ValueEventListener {
+        mDbRef.child("chats").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                userList.clear()
+                chatList.clear()
                 for(postSnapshot in snapshot.children){
-                    val currentUser = postSnapshot.getValue(User::class.java)
-                    if(mAuth.currentUser?.uid != currentUser?.uid){
-                        userList.add(currentUser!!)
-                    }
+                    val currentChat = postSnapshot.getValue(ChatObject::class.java)
+                    currentChat!!.chatId = postSnapshot.key
+                    chatList.add(currentChat!!) //If we want to only show some chats, we can add a condition here
                 }
                 adapter.notifyDataSetChanged()
             }
