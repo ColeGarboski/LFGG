@@ -18,23 +18,15 @@ class Chat : AppCompatActivity() {
     private lateinit var messageList: ArrayList<Message>
     private lateinit var mDbRef: DatabaseReference
 
-    var receiverRoom: String? = null
-    var senderRoom: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
-        val user = intent.getStringExtra("user")
-        val receiverUid = intent.getStringExtra("uid")
-        val senderUid = FirebaseAuth.getInstance().currentUser?.uid
+        val chatName = intent.getStringExtra("chatName")
+        val chatId = intent.getStringExtra("chatId")
         mDbRef = FirebaseDatabase.getInstance().reference
 
-
-        senderRoom = receiverUid + senderUid    //***************** WILL NEED TO MESS WITH THESE IN ORDER TO MAKE A GROUPCHAT I THINK
-        receiverRoom = senderUid + receiverUid
-
-        supportActionBar?.title = user
+        supportActionBar?.title = chatName
 
         chatRecyclerView = findViewById(R.id.chatRecyclerView)
         messageBox = findViewById(R.id.messageBox)
@@ -46,7 +38,7 @@ class Chat : AppCompatActivity() {
         chatRecyclerView.adapter = messageAdapter
 
         //Logic for adding data to recyclerView
-        mDbRef.child("chats").child(senderRoom!!).child("messages")
+        mDbRef.child("chats").child(chatId!!).child("messages")
             .addValueEventListener(object: ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -69,13 +61,11 @@ class Chat : AppCompatActivity() {
         // Adding message to database
         sendButton.setOnClickListener {
             val message = messageBox.text.toString()
+            val senderUid = FirebaseAuth.getInstance().uid
             val messageObject = Message(message, senderUid)
 
-            mDbRef.child("chats").child(senderRoom!!).child("messages").push()
-                .setValue(messageObject).addOnSuccessListener {
-                    mDbRef.child("chats").child(receiverRoom!!).child("messages").push()
-                        .setValue(messageObject)
-                }
+            mDbRef.child("chats").child(chatId!!).child("messages").push()
+                .setValue(messageObject)
             messageBox.setText("")
         }
     }
