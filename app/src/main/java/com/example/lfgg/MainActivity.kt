@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var userRecyclerView: RecyclerView
     private lateinit var chatList: ArrayList<ChatObject>
+    private lateinit var btnNewChat: Button
     private lateinit var adapter: UserAdapter
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDbRef: DatabaseReference
@@ -25,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         mDbRef = FirebaseDatabase.getInstance().reference
         chatList = ArrayList()
         adapter = UserAdapter(this, chatList)
+        btnNewChat = findViewById(R.id.btnNewChat)
         userRecyclerView = findViewById(R.id.userRecyclerView)
         userRecyclerView.layoutManager = LinearLayoutManager(this)
         userRecyclerView.adapter = adapter
@@ -36,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                     currentChat!!.chatId = postSnapshot.key
                     chatList.add(currentChat!!) //If we want to only show some chats, we can add a condition here
                 }
+                //Chatlist sort (for zach)
                 adapter.notifyDataSetChanged()
             }
 
@@ -45,6 +49,10 @@ class MainActivity : AppCompatActivity() {
 
         })
 
+        btnNewChat.setOnClickListener {
+            val intent = Intent(this, NewChat::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
