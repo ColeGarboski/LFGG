@@ -35,7 +35,7 @@ class NewChat : AppCompatActivity() {
             mDbRef.child("chats").child(newKey!!).child("maxPlayers").setValue(edtMaxPlayers.text.toString())
             mDbRef.child("chats").child(newKey!!).child("currentPlayers").setValue("1")
 
-            val intent = Intent(this, ForgotPassword::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }
