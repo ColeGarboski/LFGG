@@ -19,6 +19,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: UserAdapter
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDbRef: DatabaseReference
+
+    private lateinit var platformSelection: String //platform requested by the user (i wanted more than one at once but that is nasty..maybe later)
+    private lateinit var gameSelection: String //string of game selected (i wanted more than one at once but that is nasty..maybe later)
+    private val playerCountSelection = 0  //this is the number of players missing from a lobby (whenever the user enters it, change this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -37,7 +42,15 @@ class MainActivity : AppCompatActivity() {
                 for(postSnapshot in snapshot.children){
                     val currentChat = postSnapshot.getValue(ChatObject::class.java)
                     currentChat!!.chatId = postSnapshot.key
-                    chatList.add(currentChat!!) //If we want to only show some chats, we can add a condition here
+
+                    //condition to filter by user choice of Platform(xbox,pc,playstation), Game(COD,Destiny,BungoBros), missing players(chat maximum minus chat current)
+                    val playersMissing = currentChat.maxPlayers?.minus(currentChat.currentPlayers) //number of players missing
+                    if(    (playersMissing != null && playersMissing <= playerCountSelection)    && (currentChat.gameName == gameSelection) && (currentChat.platform == platformSelection)   && (playersMissing != 0)  )
+                    {
+
+                        chatList.add(currentChat!!) //add currentChat to array of chats to be displayed only if it matches the filters from the user
+
+                    }
                 }
                 //Chatlist sort (for zach)
                 adapter.notifyDataSetChanged()
