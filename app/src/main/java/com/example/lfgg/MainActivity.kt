@@ -22,11 +22,16 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var platformSelection: String //platform requested by the user (i wanted more than one at once but that is nasty..maybe later)
     private lateinit var gameSelection: String //string of game selected (i wanted more than one at once but that is nasty..maybe later)
-    private val playerCountSelection = 0  //this is the number of players missing from a lobby (whenever the user enters it, change this)
+    private var playerCountSelection: Int = 0//this is the number of players missing from a lobby (whenever the user enters it, change this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        platformSelection = "Xbox"  //some tests
+        gameSelection = "xbox"
+        playerCountSelection = 4
+
 
         mAuth = FirebaseAuth.getInstance()
         mDbRef = FirebaseDatabase.getInstance().reference

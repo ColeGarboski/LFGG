@@ -6,7 +6,7 @@ class ChatObject {
     var gameName: String? = null
     var platform : String? = null
     var currentPlayers: Int = 0
-    var maxPlayers: Int? = 0
+    var maxPlayers: Int = 0
     constructor(){}
 
     constructor(chatId: String?, chatName: String?, gameName: String?, platform: String?, currentPlayers: Int, maxPlayers: Int) {
