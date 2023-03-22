@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                     currentChat!!.chatId = postSnapshot.key
                     chatList.add(currentChat!!) //If we want to only show some chats, we can add a condition here
                 }
+                //Chatlist sort (for zach)
                 adapter.notifyDataSetChanged()
             }
 
