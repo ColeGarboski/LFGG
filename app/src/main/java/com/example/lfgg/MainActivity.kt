@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         platformSelection = "Xbox"  //some tests
-        gameSelection = "xbox"
-        playerCountSelection = 4
+        gameSelection = "example game"
+        playerCountSelection = 0 //this selection is saying "I want a game with 10 or more openings"
 
 
         mAuth = FirebaseAuth.getInstance()
@@ -50,13 +50,16 @@ class MainActivity : AppCompatActivity() {
 
                     //condition to filter by user choice of Platform(xbox,pc,playstation), Game(COD,Destiny,BungoBros), missing players(chat maximum minus chat current)
                     val playersMissing = currentChat.maxPlayers?.minus(currentChat.currentPlayers) //number of players missing
-                    if(    (playersMissing != null && playersMissing <= playerCountSelection)    && (currentChat.gameName == gameSelection) && (currentChat.platform == platformSelection)   && (playersMissing != 0)  )
+                    if(    (playersMissing != null && playersMissing >= playerCountSelection)    && (currentChat.gameName == gameSelection) && (currentChat.platform == platformSelection)   && (playersMissing != 0)  )
                     {
 
                         chatList.add(currentChat!!) //add currentChat to array of chats to be displayed only if it matches the filters from the user
 
                     }
                 }
+
+
+
                 //Chatlist sort (for zach)
                 adapter.notifyDataSetChanged()
             }
