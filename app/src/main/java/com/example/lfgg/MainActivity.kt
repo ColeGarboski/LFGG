@@ -10,6 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.Duration
+import java.time.format.DateTimeFormatter
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,15 +27,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var platformSelection: String //platform requested by the user (i wanted more than one at once but that is nasty..maybe later)
     private lateinit var gameSelection: String //string of game selected (i wanted more than one at once but that is nasty..maybe later)
-    private var playerCountSelection: Int = 0//this is the number of players missing from a lobby (whenever the user enters it, change this)
+    private var playerCountSelection: Int = 0  //this is the number of players missing from a lobby (whenever the user enters it, change this) we will return any lobby with this many openings or more (maybe change later)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        platformSelection = "Xbox"  //some tests
-        gameSelection = "example game"
-        playerCountSelection = 0 //this selection is saying "I want a game with 10 or more openings"
+        gameSelection = "video game 1"  //manual testing (becasue no ui yet)
+        platformSelection = "PC"      //manual testing (becasue no ui yet)
 
 
         mAuth = FirebaseAuth.getInstance()
@@ -48,8 +52,20 @@ class MainActivity : AppCompatActivity() {
                     val currentChat = postSnapshot.getValue(ChatObject::class.java)
                     currentChat!!.chatId = postSnapshot.key
 
+
+                    val formattedDateTime = currentChat.timeCreated
+                    val localDateTime = LocalDateTime.parse(formattedDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                    //if statement to delete a chat that is too old (has existed for longer than 24 hours)
+                    val chatLifespan = Duration.between(localDateTime, LocalDateTime.now(ZoneOffset.UTC) )
+                    if( chatLifespan.toHours().toInt() > 24   )
+                    {
+                        mDbRef.child("chats").child(currentChat.chatId.toString()).removeValue()
+
+                    }
+
+
                     //condition to filter by user choice of Platform(xbox,pc,playstation), Game(COD,Destiny,BungoBros), missing players(chat maximum minus chat current)
-                    val playersMissing = currentChat.maxPlayers?.minus(currentChat.currentPlayers) //number of players missing
+                    val playersMissing = currentChat.maxPlayers.minus(currentChat.currentPlayers) //number of players missing
                     if(    (playersMissing != null && playersMissing >= playerCountSelection)    && (currentChat.gameName == gameSelection) && (currentChat.platform == platformSelection)   && (playersMissing != 0)  )
                     {
 
