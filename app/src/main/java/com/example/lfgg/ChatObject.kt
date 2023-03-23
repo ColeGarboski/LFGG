@@ -11,6 +11,7 @@ class ChatObject {
     var maxPlayers: Int = 0
     var platform : String? = null
     var timeCreated : String? = null
+    var sortValue : Float = 999f
 
     constructor(){}
 
@@ -21,9 +22,9 @@ class ChatObject {
         this.gameName = gameName
         this.maxPlayers = maxPlayers
         this.platform = platform
-
-
         this.timeCreated = timeCreated
+
+
 
     }
 }

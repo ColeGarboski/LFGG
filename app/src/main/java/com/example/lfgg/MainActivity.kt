@@ -54,10 +54,10 @@ class MainActivity : AppCompatActivity() {
 
 
                     val formattedDateTime = currentChat.timeCreated
-                    val localDateTime = LocalDateTime.parse(formattedDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                    val localDateTime = LocalDateTime.parse(formattedDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME)  //converts the string from databse back into a LocalDateTime in order to use the duration function
                     //if statement to delete a chat that is too old (has existed for longer than 24 hours)
-                    val chatLifespan = Duration.between(localDateTime, LocalDateTime.now(ZoneOffset.UTC) )
-                    if( chatLifespan.toHours().toInt() > 24   )
+                    val chatAge = Duration.between(localDateTime, LocalDateTime.now(ZoneOffset.UTC) )
+                    if( chatAge.toHours().toInt() > 24   )
                     {
                         mDbRef.child("chats").child(currentChat.chatId.toString()).removeValue()
 
@@ -68,6 +68,17 @@ class MainActivity : AppCompatActivity() {
                     val playersMissing = currentChat.maxPlayers.minus(currentChat.currentPlayers) //number of players missing
                     if(    (playersMissing != null && playersMissing >= playerCountSelection)    && (currentChat.gameName == gameSelection) && (currentChat.platform == platformSelection)   && (playersMissing != 0)  )
                     {
+                        //before valid chat is added, its sortValue is calculated. The default is 999 if something does not work
+
+                        val ageFactor = chatAge.toHours().toFloat() / 24
+                        val fullnessFactor = 1f - ( currentChat.currentPlayers.toFloat() / currentChat.maxPlayers.toFloat() )
+                        currentChat.sortValue = ageFactor + fullnessFactor //smaller is better.
+                        // Values range from 0 - 2, but a completely full chat is not valid
+                        // so the maximum score is from a chat that was just created and has a very small percent of their players missing.
+                        // for example: chat created 10 minutes ago and it has 29/30 players
+                        // the lowest scores will be reserved for chats that have existed for a long time and only have one player
+
+
 
                         chatList.add(currentChat!!) //add currentChat to array of chats to be displayed only if it matches the filters from the user
 
@@ -77,6 +88,10 @@ class MainActivity : AppCompatActivity() {
 
 
                 //Chatlist sort (for zach)
+
+                chatList.sortBy { it.sortValue  }
+
+
                 adapter.notifyDataSetChanged()
             }
 

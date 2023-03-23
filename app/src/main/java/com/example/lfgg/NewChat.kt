@@ -38,7 +38,7 @@ class NewChat : AppCompatActivity() {
             mDbRef.child("chats").child(newKey!!).child("currentPlayers").setValue(1) //was tostring...
             mDbRef.child("chats").child(newKey!!).child("platform").setValue("PC") //I added manually, needs ui
             val localDateTime = LocalDateTime.now(ZoneOffset.UTC)
-            val formattedDateTime = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) //formats to string i hope
+            val formattedDateTime = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) //formats LocalDateTime to string. Otherwise, the database dynamically creates like 10 subFolders which is cool but hard to pull
             mDbRef.child("chats").child(newKey!!).child("timeCreated").setValue(formattedDateTime) //does not need ui
 
 
