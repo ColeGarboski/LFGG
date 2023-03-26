@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="platformsArray">
+        <item>Nintendo Switch</item>
+        <item>Xbox One</item>
+        <item>Xbox Series</item>
+        <item>PS4</item>
+        <item>PS5</item>
+        <item>PC</item>
+        <item>Samsung Fridge</item>
+    </string-array>
+</resources>

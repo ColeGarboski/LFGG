@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gameTitlesArray">
+        <item>Destiny 2</item>
+        <item>Warzone</item>
+        <item>ChowNow</item>
+        <item>Elden Ring</item>
+        <item>Risk of Rain</item>
+        <item>CyberPunk 2077</item>
+        <item>The Sims 4</item>
+        <item>Rimworld</item>
+        <item>Taco Bell Simulator</item>
+    </string-array>
+</resources>
