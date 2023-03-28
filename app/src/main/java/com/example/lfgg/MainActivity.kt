@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        gameSelection = "video game 1"  //manual testing (becasue no ui yet)
+        gameSelection = "Destiny 2"  //manual testing (becasue no ui yet)
         platformSelection = "PC"      //manual testing (becasue no ui yet)
 
 
