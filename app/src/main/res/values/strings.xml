@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">LFGG</string>
+
+    <string-array name="platforms">
+        <item>PC</item>
+        <item>Xbox</item>
+        <item>PlayStation</item>
+        <item>Nintendo Switch</item>
+    </string-array>
+
+    <string-array name="games">
+        <item>Call of Duty</item>
+        <item>Halo</item>
+        <item>Destiny</item>
+        <item>Borderlands</item>
+    </string-array>
+
 </resources>
