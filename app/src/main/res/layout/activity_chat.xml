@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".Chat">
 
+    <Button
+        android:id="@+id/btnMemberCount"
+        android:layout_width="108dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="300dp"
+        android:text="Members">
+    </Button>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
@@ -35,6 +42,8 @@
             android:layout_height="50dp"
             android:src="@drawable/sendbutton"
             android:layout_weight="20"/>
+
+
 
     </LinearLayout>
 </RelativeLayout>
