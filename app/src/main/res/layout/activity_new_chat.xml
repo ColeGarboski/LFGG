@@ -16,15 +16,13 @@
         android:inputType="textPersonName"
         android:hint="Who up?" />
 
-    <EditText
-        android:id="@+id/edttxtGameTitle"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/spinGameTitle"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtGameTitle"
+        android:layout_below="@+id/txtGameTitle"
         android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="ChowNow" />
+        android:layout_marginTop="20dp" />
 
     <EditText
         android:id="@+id/edtnumMaxPlayers"
@@ -41,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         android:text="Chat Title" />
 
     <TextView
@@ -57,18 +55,36 @@
         android:id="@+id/txtMaxPlayers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edttxtGameTitle"
+        android:layout_below="@id/spinGameTitle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="Max Players" />
 
-    <Button
-        android:id="@+id/btnAddChat"
+    <TextView
+        android:id="@+id/txtPlatform"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/edtnumMaxPlayers"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:text="Platform" />
+
+    <Button
+        android:id="@+id/btnAddChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinPlatform"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:text="Create Chat" />
+
+    <Spinner
+        android:id="@+id/spinPlatform"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtPlatform"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
 
 </RelativeLayout>

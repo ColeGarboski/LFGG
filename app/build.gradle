@@ -10,8 +10,8 @@ android {
 
     defaultConfig {
         applicationId "com.example.lfgg"
-        minSdk 33
-        targetSdk 33
+        minSdk 31 // changed from 33 to test on phone
+        targetSdk 31 // changed from 33 to test on phone
         versionCode 1
         versionName "1.0"
 
