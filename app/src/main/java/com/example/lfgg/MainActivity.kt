@@ -5,7 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Spinner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -21,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userRecyclerView: RecyclerView
     private lateinit var chatList: ArrayList<ChatObject>
     private lateinit var btnNewChat: Button
+    private lateinit var spinGameTitle: Spinner
+    private lateinit var spinPlatform: Spinner
     private lateinit var adapter: UserAdapter
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDbRef: DatabaseReference
@@ -33,8 +39,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        gameSelection = "Destiny 2"  //manual testing (becasue no ui yet)
-        platformSelection = "PC"      //manual testing (becasue no ui yet)
+        spinGameTitle = findViewById(R.id.spinGameTitle)
+        spinPlatform = findViewById(R.id.spinPlatform)
 
 
         mAuth = FirebaseAuth.getInstance()
@@ -45,6 +51,51 @@ class MainActivity : AppCompatActivity() {
         userRecyclerView = findViewById(R.id.userRecyclerView)
         userRecyclerView.layoutManager = LinearLayoutManager(this)
         userRecyclerView.adapter = adapter
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter.createFromResource(this, R.array.gameTitlesArray, android.R.layout.simple_spinner_item).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinGameTitle.adapter = adapter
+        }
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter.createFromResource(this, R.array.platformsArray, android.R.layout.simple_spinner_item).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinPlatform.adapter = adapter
+        }
+
+
+        btnNewChat.setOnClickListener {
+            val intent = Intent(this, NewChat::class.java)
+            startActivity(intent)
+        }
+
+        spinPlatform.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                platformSelection = spinPlatform.selectedItem.toString()
+                fetchAndUpdateChats()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+            }
+        }
+
+        spinGameTitle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                gameSelection = spinGameTitle.selectedItem.toString()
+                fetchAndUpdateChats()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+            }
+        }
+    }
+
+    private fun fetchAndUpdateChats() {
         mDbRef.child("chats").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 chatList.clear()
@@ -100,11 +151,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-
-        btnNewChat.setOnClickListener {
-            val intent = Intent(this, NewChat::class.java)
-            startActivity(intent)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
