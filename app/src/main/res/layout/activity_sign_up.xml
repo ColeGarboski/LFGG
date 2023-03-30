@@ -63,14 +63,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edt_password"
-        android:entries="@array/platforms" />
+        android:entries="@array/platformsArray" />
 
     <Spinner
         android:id="@+id/spn_games"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/spn_platform"
-        android:entries="@array/games" />
+        android:entries="@array/gameTitlesArray" />
 
     <Button
         android:id="@+id/btnSignup"
