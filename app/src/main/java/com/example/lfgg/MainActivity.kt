@@ -33,7 +33,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var platformSelection: String //platform requested by the user (i wanted more than one at once but that is nasty..maybe later)
     private lateinit var gameSelection: String //string of game selected (i wanted more than one at once but that is nasty..maybe later)
-    private var playerCountSelection: Int = 0  //this is the number of players missing from a lobby (whenever the user enters it, change this) we will return any lobby with this many openings or more (maybe change later)
+    private var playerCountSelection: Int =
+        0  //this is the number of players missing from a lobby (whenever the user enters it, change this) we will return any lobby with this many openings or more (maybe change later)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +54,11 @@ class MainActivity : AppCompatActivity() {
         userRecyclerView.adapter = adapter
 
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter.createFromResource(this, R.array.gameTitlesArray, android.R.layout.simple_spinner_item).also { adapter ->
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.gameTitlesArray,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
@@ -61,7 +66,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter.createFromResource(this, R.array.platformsArray, android.R.layout.simple_spinner_item).also { adapter ->
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.platformsArray,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
@@ -75,7 +84,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         spinPlatform.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 platformSelection = spinPlatform.selectedItem.toString()
                 fetchAndUpdateChats()
             }
@@ -85,7 +99,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         spinGameTitle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 gameSelection = spinGameTitle.selectedItem.toString()
                 fetchAndUpdateChats()
             }
@@ -99,48 +118,54 @@ class MainActivity : AppCompatActivity() {
         mDbRef.child("chats").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 chatList.clear()
-                for(postSnapshot in snapshot.children){
+                for (postSnapshot in snapshot.children) {
                     val currentChat = postSnapshot.getValue(ChatObject::class.java)
                     currentChat!!.chatId = postSnapshot.key
 
-
                     val formattedDateTime = currentChat.timeCreated
-                    val localDateTime = LocalDateTime.parse(formattedDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME)  //converts the string from databse back into a LocalDateTime in order to use the duration function
-                    //if statement to delete a chat that is too old (has existed for longer than 24 hours)
-                    val chatAge = Duration.between(localDateTime, LocalDateTime.now(ZoneOffset.UTC) )
-                    if( chatAge.toHours().toInt() > 24   )
-                    {
-                        mDbRef.child("chats").child(currentChat.chatId.toString()).removeValue()
+                    if (formattedDateTime != null) {
+                        val localDateTime = LocalDateTime.parse(
+                            formattedDateTime,
+                            DateTimeFormatter.ISO_LOCAL_DATE_TIME
+                        )
 
+                        val chatAge =
+                            Duration.between(localDateTime, LocalDateTime.now(ZoneOffset.UTC))
+                        if (chatAge.toHours().toInt() > 24) {
+                            mDbRef.child("chats").child(currentChat.chatId.toString()).removeValue()
+                        }
+
+                        //condition to filter by user choice of Platform(xbox,pc,playstation), Game(COD,Destiny,BungoBros), missing players(chat maximum minus chat current)
+                        val playersMissing =
+                            currentChat.maxPlayers.minus(currentChat.currentPlayers) //number of players missing
+                        if ((playersMissing != null && playersMissing >= playerCountSelection) && (currentChat.gameName == gameSelection) && (currentChat.platform == platformSelection) && (playersMissing != 0)) {
+                            //before valid chat is added, its sortValue is calculated. The default is 999 if something does not work
+
+                            val ageFactor = chatAge.toHours().toFloat() / 24
+                            val fullnessFactor =
+                                1f - (currentChat.currentPlayers.toFloat() / currentChat.maxPlayers.toFloat())
+                            currentChat.sortValue = ageFactor + fullnessFactor //smaller is better.
+                            // Values range from 0 - 2, but a completely full chat is not valid
+                            // so the maximum score is from a chat that was just created and has a very small percent of their players missing.
+                            // for example: chat created 10 minutes ago and it has 29/30 players
+                            // the lowest scores will be reserved for chats that have existed for a long time and only have one player
+
+
+                            chatList.add(currentChat!!) //add currentChat to array of chats to be displayed only if it matches the filters from the user
+
+                        }
+                    } else {
+                        // Handle the case when formattedDateTime is null
+                        // For example, show an error message, skip this chat, etc.
                     }
 
 
-                    //condition to filter by user choice of Platform(xbox,pc,playstation), Game(COD,Destiny,BungoBros), missing players(chat maximum minus chat current)
-                    val playersMissing = currentChat.maxPlayers.minus(currentChat.currentPlayers) //number of players missing
-                    if(    (playersMissing != null && playersMissing >= playerCountSelection)    && (currentChat.gameName == gameSelection) && (currentChat.platform == platformSelection)   && (playersMissing != 0)  )
-                    {
-                        //before valid chat is added, its sortValue is calculated. The default is 999 if something does not work
-
-                        val ageFactor = chatAge.toHours().toFloat() / 24
-                        val fullnessFactor = 1f - ( currentChat.currentPlayers.toFloat() / currentChat.maxPlayers.toFloat() )
-                        currentChat.sortValue = ageFactor + fullnessFactor //smaller is better.
-                        // Values range from 0 - 2, but a completely full chat is not valid
-                        // so the maximum score is from a chat that was just created and has a very small percent of their players missing.
-                        // for example: chat created 10 minutes ago and it has 29/30 players
-                        // the lowest scores will be reserved for chats that have existed for a long time and only have one player
-
-
-
-                        chatList.add(currentChat!!) //add currentChat to array of chats to be displayed only if it matches the filters from the user
-
-                    }
                 }
-
 
 
                 //Chatlist sort (for zach)
 
-                chatList.sortBy { it.sortValue  }
+                chatList.sortBy { it.sortValue }
 
 
                 adapter.notifyDataSetChanged()
@@ -159,7 +184,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.logout) {
+        if (item.itemId == R.id.logout) {
             //Logic for logout
             mAuth.signOut()
             val intent = Intent(this@MainActivity, Login::class.java)
