@@ -63,6 +63,36 @@ class MainActivity : AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
             spinGameTitle.adapter = adapter
+            //println("Game Title Spinner Set")
+        }
+
+        spinGameTitle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                gameSelection = spinGameTitle.selectedItem.toString()
+                //println("Game Title Spinner Selected: $gameSelection")
+                fetchAndUpdateChats()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+            }
+        }
+
+        //Set default to players favorite
+        mDbRef.child("user").child(mAuth.currentUser!!.uid).child("game").get().addOnSuccessListener {
+            //println("Favorite Game value from db: ${it.value.toString()}")
+            for (i in 0 until spinGameTitle.count) {
+                if (spinGameTitle.getItemAtPosition(i).toString() == it.value.toString()) {
+                    spinGameTitle.setSelection(i)
+                    //println("Game Title Spinner Set to Favorite: $it.value.toString()")
+                }
+            }
+        }.addOnFailureListener {
+            println("piss")
         }
 
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -75,12 +105,6 @@ class MainActivity : AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
             spinPlatform.adapter = adapter
-        }
-
-
-        btnNewChat.setOnClickListener {
-            val intent = Intent(this, NewChat::class.java)
-            startActivity(intent)
         }
 
         spinPlatform.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -98,19 +122,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        spinGameTitle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                gameSelection = spinGameTitle.selectedItem.toString()
-                fetchAndUpdateChats()
+        //Set default to players favorite
+        mDbRef.child("user").child(mAuth.currentUser!!.uid).child("platform").get().addOnSuccessListener {
+            //println("Favorite Game value from db: ${it.value.toString()}")
+            for (i in 0 until spinPlatform.count) {
+                if (spinPlatform.getItemAtPosition(i).toString() == it.value.toString()) {
+                    spinPlatform.setSelection(i)
+                    //println("Game Title Spinner Set to Favorite: $it.value.toString()")
+                }
             }
+        }.addOnFailureListener {
+            println("piss")
+        }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-            }
+        btnNewChat.setOnClickListener {
+            val intent = Intent(this, NewChat::class.java)
+            startActivity(intent)
         }
     }
 
