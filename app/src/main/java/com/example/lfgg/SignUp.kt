@@ -52,9 +52,6 @@ class SignUp : AppCompatActivity() {
     }
 
     private fun signUp(user: String, email: String, password: String, platform: String, game: String){
-        // Retrieve selected platform and game
-        val platform = spnPlatform.selectedItem.toString()
-        val game = spnGames.selectedItem.toString()
 
         // Creating user logic
         mAuth.createUserWithEmailAndPassword(email, password)
