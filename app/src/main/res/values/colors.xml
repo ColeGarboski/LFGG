@@ -10,4 +10,5 @@
     <color name="purple"> #290849</color>
     <color name="yellow"> #FEE601</color>
     <color name="fuchsia"> #BA0DCA</color>
+    <color name="bubble_color">#FF4081</color>
 </resources>
