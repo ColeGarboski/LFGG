@@ -2,10 +2,12 @@ package com.example.lfgg
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -62,7 +64,8 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>):
             val invertedBubbleColor = Color.parseColor(invertedHexColor)
             val bubbleColor = Color.parseColor(hexColor)
 
-            bubbleTextView.setBackgroundColor(bubbleColor)
+            val coloredBubble = setColorToBubble(context, R.drawable.circular_bg, bubbleColor)
+            bubbleTextView.background = coloredBubble
             //bubbleTextView.setTextColor(invertedBubbleColor)
 
             mDbRef.child("user").child(currentMessage.senderId!!).child("name").get().addOnSuccessListener {
@@ -73,6 +76,12 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>):
             }.addOnFailureListener {
             }
         }
+    }
+
+    fun setColorToBubble(context: Context, drawableId: Int, color: Int): GradientDrawable {
+        val drawable = ContextCompat.getDrawable(context, drawableId) as GradientDrawable
+        drawable.setColor(color)
+        return drawable
     }
 
     fun usernameToColor(username: String): String {
