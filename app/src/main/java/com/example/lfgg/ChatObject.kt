@@ -11,11 +11,12 @@ class ChatObject {
     var maxPlayers: Int = 0
     var platform : String? = null
     var timeCreated : String? = null
+    var members : ArrayList<String> = ArrayList()
     var sortValue : Float = 999f
 
     constructor(){}
 
-    constructor(chatId: String?, chatName: String?, currentPlayers: Int, gameName: String?, maxPlayers: Int, platform: String?, timeCreated: String?) {
+    constructor(chatId: String?, chatName: String?, currentPlayers: Int, gameName: String?, maxPlayers: Int, platform: String?, timeCreated: String?, members: ArrayList<String>) {
         this.chatId = chatId
         this.chatName = chatName
         this.currentPlayers = currentPlayers
@@ -23,8 +24,7 @@ class ChatObject {
         this.maxPlayers = maxPlayers
         this.platform = platform
         this.timeCreated = timeCreated
-
-
+        this.members = members
 
     }
 }
