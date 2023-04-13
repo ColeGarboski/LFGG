@@ -8,11 +8,11 @@
     tools:context=".SignUp">
 
     <ImageView
-        android:layout_width="260dp"
-        android:layout_height="165dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/lfgglogofs"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/lfgglogo2" />
+        android:layout_marginTop="10dp"/>
 
     <EditText
         android:id="@+id/edt_email"
@@ -66,8 +66,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="100dp"
         android:layout_marginRight="100dp"
-        android:background="@drawable/spinner_design"
-        android:popupBackground="@color/blue"
+        android:background="@color/cardview_light_background"
         android:entries="@array/platformsArray" />
 
     <Spinner
@@ -78,8 +77,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="100dp"
         android:layout_marginRight="100dp"
-        android:background="@drawable/spinner_design"
-        android:popupBackground="@color/blue"
+        android:background="@color/cardview_light_background"
         android:entries="@array/gameTitlesArray" />
 
     <Button

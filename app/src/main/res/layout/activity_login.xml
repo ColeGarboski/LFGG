@@ -8,11 +8,11 @@
     tools:context="com.example.lfgg.Login">
 
     <ImageView
-        android:layout_width="210dp"
-        android:layout_height="165dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/lfgglogofs"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/lfgglogo2" />
+        android:layout_marginTop="10dp"/>
     
     <EditText
         android:id="@+id/edt_email"
@@ -48,7 +48,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edt_password"
-        android:background="@drawable/edit_background"
         android:text="Login"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true">
@@ -60,7 +59,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnLogin"
-        android:background="@drawable/edit_background"
         android:text="Sign Up"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true">
@@ -71,7 +69,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnSignup"
-        android:background="@drawable/edit_background"
         android:layout_marginTop="10dp"
         android:text="Forgot Password?"
         android:layout_centerHorizontal="true">
