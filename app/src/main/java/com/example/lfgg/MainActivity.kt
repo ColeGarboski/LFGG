@@ -167,7 +167,7 @@ class MainActivity : AppCompatActivity() {
                         //condition to filter by user choice of Platform(xbox,pc,playstation), Game(COD,Destiny,BungoBros), missing players(chat maximum minus chat current)
                         val playersMissing =
                             currentChat.maxPlayers.minus(currentChat.currentPlayers) //number of players missing
-                        if ((playersMissing != null && playersMissing >= playerCountSelection) && (currentChat.gameName == gameSelection) && (currentChat.platform == platformSelection) && (playersMissing != 0)) {
+                        if ((playersMissing != null && playersMissing >= playerCountSelection) && (currentChat.gameName == gameSelection) && (currentChat.platform == platformSelection)) {
                             //before valid chat is added, its sortValue is calculated. The default is 999 if something does not work
 
                             val ageFactor = chatAge.toHours().toFloat() / 24

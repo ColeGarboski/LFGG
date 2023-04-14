@@ -2,6 +2,8 @@ package com.example.lfgg
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
 
@@ -9,6 +11,9 @@ class MembersPage : AppCompatActivity() {
 
     private lateinit var memberList: ArrayList<String>
     private lateinit var mDbRef: DatabaseReference
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: MemberAdapter
+    private lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +24,15 @@ class MembersPage : AppCompatActivity() {
         memberList = ArrayList()
         mDbRef = FirebaseDatabase.getInstance().reference
 
+        viewManager = LinearLayoutManager(this@MembersPage)
+        viewAdapter = MemberAdapter(memberList)
+
+        recyclerView = findViewById<RecyclerView>(R.id.membersRecyclerView).apply {
+            setHasFixedSize(true)
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
+
         mDbRef.child("chats").child(chatId!!).child("members")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -26,10 +40,17 @@ class MembersPage : AppCompatActivity() {
                     memberList.clear()
 
                     for (postSnapshot in snapshot.children) {
-                        memberList.add(postSnapshot.getValue<String>()!!)
+                        val userID = postSnapshot.getValue<String>()!!
+                        mDbRef.child("user").child(userID!!).child("name").get()
+                            .addOnSuccessListener {
+                                println(it.getValue<String>()!!)
+                                memberList.add(it.getValue<String>()!!)
+                                viewAdapter.notifyDataSetChanged()
+                            }.addOnFailureListener {
+                                println("Failed to read value.")
+                            }
                     }
 
-                    //for (member in memberList) { println(member) }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -38,5 +59,4 @@ class MembersPage : AppCompatActivity() {
                 }
             })
     }
-
 }
