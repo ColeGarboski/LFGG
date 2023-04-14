@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import java.time.LocalDateTime
@@ -20,6 +21,7 @@ class NewChat : AppCompatActivity() {
     private lateinit var edtMaxPlayers: EditText
     private lateinit var btnCreateChat: Button
     private lateinit var mDbRef: DatabaseReference
+    private lateinit var mAuth: FirebaseAuth
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +32,7 @@ class NewChat : AppCompatActivity() {
         edtMaxPlayers = findViewById(R.id.edtnumMaxPlayers)
         btnCreateChat = findViewById(R.id.btnAddChat)
         mDbRef = FirebaseDatabase.getInstance().reference
+        mAuth = FirebaseAuth.getInstance()
 
         spinGameTitle = findViewById(R.id.spinGameTitle)
         spinPlatform = findViewById(R.id.spinPlatform)
@@ -59,10 +62,12 @@ class NewChat : AppCompatActivity() {
             mDbRef.child("chats").child(newKey!!).child("maxPlayers").setValue(edtMaxPlayers.text.toString().toInt()) //was .text.tostring...
             mDbRef.child("chats").child(newKey!!).child("currentPlayers").setValue(1)
             mDbRef.child("chats").child(newKey!!).child("platform").setValue(spinPlatform.selectedItem.toString())
+            val memberList = ArrayList<String>()
+            memberList.add(mAuth.currentUser!!.uid)
+            mDbRef.child("chats").child(newKey!!).child("members").setValue(memberList)
             val localDateTime = LocalDateTime.now(ZoneOffset.UTC)
             val formattedDateTime = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) //formats LocalDateTime to string. Otherwise, the database dynamically creates like 10 subFolders which is cool but hard to pull
             mDbRef.child("chats").child(newKey!!).child("timeCreated").setValue(formattedDateTime) //does not need ui
-
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

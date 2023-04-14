@@ -12,6 +12,9 @@
         android:theme="@style/Theme.LFGG"
         tools:targetApi="31">
         <activity
+            android:name=".MembersPage"
+            android:exported="false" />
+        <activity
             android:name=".NewChat"
             android:exported="false" />
         <activity

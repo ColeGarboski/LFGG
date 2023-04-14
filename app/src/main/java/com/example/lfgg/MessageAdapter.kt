@@ -64,8 +64,23 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>):
             val invertedBubbleColor = Color.parseColor(invertedHexColor)
             val bubbleColor = Color.parseColor(hexColor)
 
+            // Calculate color luminance
+            val red = Color.red(bubbleColor) / 255.0
+            val green = Color.green(bubbleColor) / 255.0
+            val blue = Color.blue(bubbleColor) / 255.0
+            val luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue
+
+            // Set the text color to black or white depending on the luminance
+            if (luminance <= 0.5) {
+                bubbleTextView.setTextColor(Color.WHITE)
+            } else {
+                bubbleTextView.setTextColor(Color.BLACK)
+            }
+
+
             val coloredBubble = setColorToBubble(context, R.drawable.circular_bg, bubbleColor)
             bubbleTextView.background = coloredBubble
+
             //bubbleTextView.setTextColor(invertedBubbleColor)
 
             mDbRef.child("user").child(currentMessage.senderId!!).child("name").get().addOnSuccessListener {
@@ -91,13 +106,37 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>):
         // Compute the hash value
         var hash = 0
         for (char in chars) {
-            hash += char.toInt()
+            hash += char.code
         }
 
-        // Generate red, green, and blue values using the hash value
-        val red = hash % 256
-        val green = (hash / 256) % 256
-        val blue = (hash / 256 / 256) % 256
+        // Use the hash value to determine the color tint (red, green, or blue)
+        val colorTint = hash % 3 + 1 // 1 = red, 2 = green, 3 = blue
+
+        // Use the hash and color tint to determine the color components
+        var red = 0
+        var green = 0
+        var blue = 0
+
+        when(colorTint){
+            1 -> {
+                red = 255
+                green = hash % 256
+                blue = hash % 20
+            }
+            2 -> {
+                red = hash % 256
+                green = 255
+                blue = hash % 20
+            }
+            3 -> {
+                red = hash % 256
+                green = hash % 20
+                blue = 255
+            }
+            else -> {
+                println("bruh");
+            }
+        }
 
         // Combine the color components into an ARGB hex string
         val color = StringBuilder("#AABBCCDD")

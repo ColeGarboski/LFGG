@@ -83,17 +83,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         //Set default to players favorite
-        mDbRef.child("user").child(mAuth.currentUser!!.uid).child("game").get().addOnSuccessListener {
-            //println("Favorite Game value from db: ${it.value.toString()}")
-            for (i in 0 until spinGameTitle.count) {
-                if (spinGameTitle.getItemAtPosition(i).toString() == it.value.toString()) {
-                    spinGameTitle.setSelection(i)
-                    //println("Game Title Spinner Set to Favorite: $it.value.toString()")
+        mDbRef.child("user").child(mAuth.currentUser!!.uid).child("game").get()
+            .addOnSuccessListener {
+                //println("Favorite Game value from db: ${it.value.toString()}")
+                for (i in 0 until spinGameTitle.count) {
+                    if (spinGameTitle.getItemAtPosition(i).toString() == it.value.toString()) {
+                        spinGameTitle.setSelection(i)
+                        //println("Game Title Spinner Set to Favorite: $it.value.toString()")
+                    }
                 }
+            }.addOnFailureListener {
+                println("piss")
             }
-        }.addOnFailureListener {
-            println("piss")
-        }
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter.createFromResource(
@@ -123,17 +124,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         //Set default to players favorite
-        mDbRef.child("user").child(mAuth.currentUser!!.uid).child("platform").get().addOnSuccessListener {
-            //println("Favorite Game value from db: ${it.value.toString()}")
-            for (i in 0 until spinPlatform.count) {
-                if (spinPlatform.getItemAtPosition(i).toString() == it.value.toString()) {
-                    spinPlatform.setSelection(i)
-                    //println("Game Title Spinner Set to Favorite: $it.value.toString()")
+        mDbRef.child("user").child(mAuth.currentUser!!.uid).child("platform").get()
+            .addOnSuccessListener {
+                //println("Favorite Game value from db: ${it.value.toString()}")
+                for (i in 0 until spinPlatform.count) {
+                    if (spinPlatform.getItemAtPosition(i).toString() == it.value.toString()) {
+                        spinPlatform.setSelection(i)
+                        //println("Game Title Spinner Set to Favorite: $it.value.toString()")
+                    }
                 }
+            }.addOnFailureListener {
+                println("piss")
             }
-        }.addOnFailureListener {
-            println("piss")
-        }
 
         btnNewChat.setOnClickListener {
             val intent = Intent(this, NewChat::class.java)
@@ -165,7 +167,7 @@ class MainActivity : AppCompatActivity() {
                         //condition to filter by user choice of Platform(xbox,pc,playstation), Game(COD,Destiny,BungoBros), missing players(chat maximum minus chat current)
                         val playersMissing =
                             currentChat.maxPlayers.minus(currentChat.currentPlayers) //number of players missing
-                        if ((playersMissing != null && playersMissing >= playerCountSelection) && (currentChat.gameName == gameSelection) && (currentChat.platform == platformSelection) && (playersMissing != 0)) {
+                        if ((playersMissing != null && playersMissing >= playerCountSelection) && (currentChat.gameName == gameSelection) && (currentChat.platform == platformSelection)) {
                             //before valid chat is added, its sortValue is calculated. The default is 999 if something does not work
 
                             val ageFactor = chatAge.toHours().toFloat() / 24
@@ -177,9 +179,13 @@ class MainActivity : AppCompatActivity() {
                             // for example: chat created 10 minutes ago and it has 29/30 players
                             // the lowest scores will be reserved for chats that have existed for a long time and only have one player
 
-
-                            chatList.add(currentChat!!) //add currentChat to array of chats to be displayed only if it matches the filters from the user
-
+                            if (currentChat.members.size < currentChat.maxPlayers) { //If chat is not full
+                                chatList.add(currentChat!!) //add currentChat to array of chats to be displayed only if it matches the filters from the user
+                            } else {
+                                if (currentChat.members.contains(mAuth.currentUser!!.uid)) { //If user is in chat
+                                    chatList.add(currentChat!!) //add currentChat to array of chats to be displayed only if it matches the filters from the user
+                                }
+                            }
                         }
                     } else {
                         // Handle the case when formattedDateTime is null
