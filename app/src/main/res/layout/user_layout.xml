@@ -13,6 +13,7 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="30sp"
+            android:textColor="@color/white"
             android:layout_marginLeft="10dp"/>
 
     <View
