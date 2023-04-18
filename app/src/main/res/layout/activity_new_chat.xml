@@ -4,24 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/purple"
     tools:context="com.example.lfgg.NewChat">
 
     <EditText
         android:id="@+id/edttxtChatTitle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_below="@id/txtChatTitle"
         android:layout_centerHorizontal="true"
+        android:textColorHint="@color/white"
         android:ems="10"
+        android:paddingLeft="10dp"
         android:inputType="textPersonName"
+        android:background="@drawable/edit_background"
+
         android:hint="Who up?" />
 
     <Spinner
         android:id="@+id/spinGameTitle"
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_below="@+id/txtGameTitle"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/spinner_design"
+        android:popupBackground="@color/blue"
         android:layout_marginTop="20dp" />
 
     <EditText
@@ -31,7 +38,10 @@
         android:layout_below="@id/txtMaxPlayers"
         android:layout_centerHorizontal="true"
         android:ems="10"
+        android:paddingLeft="10dp"
+        android:textColorHint="@color/white"
         android:inputType="number"
+        android:background="@drawable/edit_background"
         android:hint="6"/>
 
     <TextView
@@ -39,6 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
         android:layout_marginTop="100dp"
         android:text="Chat Title" />
 
@@ -48,6 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/edttxtChatTitle"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
         android:layout_marginTop="20dp"
         android:text="Game Title" />
 
@@ -57,6 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/spinGameTitle"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
         android:layout_marginTop="20dp"
         android:text="Max Players" />
 
@@ -66,6 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/edtnumMaxPlayers"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
         android:layout_marginTop="20dp"
         android:text="Platform" />
 
@@ -81,9 +95,11 @@
     <Spinner
         android:id="@+id/spinPlatform"
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_below="@+id/txtPlatform"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/spinner_design"
+        android:popupBackground="@color/blue"
         android:layout_marginTop="20dp" />
 
 
