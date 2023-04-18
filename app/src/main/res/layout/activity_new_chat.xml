@@ -7,19 +7,34 @@
     android:background="@color/purple"
     tools:context="com.example.lfgg.NewChat">
 
-    <EditText
-        android:id="@+id/edttxtChatTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout_edttxtChatTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/txtChatTitle"
         android:layout_centerHorizontal="true"
-        android:textColorHint="@color/white"
-        android:ems="10"
-        android:paddingLeft="10dp"
-        android:inputType="textPersonName"
-        android:background="@drawable/edit_background"
+        app:hintEnabled="false"
+        app:boxBackgroundColor="#FFFFFF"
+        app:boxCornerRadiusTopStart="24dp"
+        app:boxCornerRadiusTopEnd="24dp"
+        app:boxCornerRadiusBottomStart="24dp"
+        app:boxCornerRadiusBottomEnd="24dp"
+        app:boxStrokeColor="#02a9f4"
+        app:boxStrokeWidth="2dp"
+        app:boxBackgroundMode="outline">
 
-        android:hint="Who up?" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edttxtChatTitle"
+            android:layout_width="367dp"
+            android:layout_height="28dp"
+            android:layout_marginLeft="22dp"
+            android:ems="10"
+            android:hint="Who up?"
+            android:inputType="textPersonName"
+            android:paddingLeft="10dp"
+            android:textColorHint="@color/white" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Spinner
         android:id="@+id/spinGameTitle"
@@ -29,7 +44,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/spinner_design"
         android:popupBackground="@color/blue"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="5dp" />
 
     <EditText
         android:id="@+id/edtnumMaxPlayers"
@@ -37,11 +52,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txtMaxPlayers"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:ems="10"
+        android:textAlignment="center"
         android:paddingLeft="10dp"
-        android:textColorHint="@color/white"
+        android:textColorHint="@color/black"
         android:inputType="number"
-        android:background="@drawable/edit_background"
+        android:background="@drawable/textbox"
         android:hint="6"/>
 
     <TextView
@@ -50,17 +67,16 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:textColor="@color/white"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="30dp"
         android:text="Chat Title" />
 
     <TextView
         android:id="@+id/txtGameTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edttxtChatTitle"
         android:layout_centerHorizontal="true"
         android:textColor="@color/white"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="90dp"
         android:text="Game Title" />
 
     <TextView
@@ -70,7 +86,7 @@
         android:layout_below="@id/spinGameTitle"
         android:layout_centerHorizontal="true"
         android:textColor="@color/white"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Max Players" />
 
     <TextView
@@ -80,17 +96,29 @@
         android:layout_below="@id/edtnumMaxPlayers"
         android:layout_centerHorizontal="true"
         android:textColor="@color/white"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Platform" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAddChat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/spinPlatform"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Create Chat" />
+        android:background="@drawable/bluebutton"
+        app:backgroundTint="@null"
+        app:cornerRadius="24dp"
+        android:text="Create Chat"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:fontFamily="sans-serif"
+        android:elevation="4dp">
+    </com.google.android.material.button.MaterialButton>
+
 
     <Spinner
         android:id="@+id/spinPlatform"
@@ -100,7 +128,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/spinner_design"
         android:popupBackground="@color/blue"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="10dp" />
 
 
 </RelativeLayout>

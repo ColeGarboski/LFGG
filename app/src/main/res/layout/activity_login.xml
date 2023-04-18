@@ -13,68 +13,131 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:src="@drawable/lfgglogo2" />
-    
-    <EditText
-        android:id="@+id/edt_email"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout_email"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="210dp"
-        android:hint="Email"
-        android:textColorHint="@color/white"
-        android:background="@drawable/edit_background"
-        android:paddingLeft="10dp"
-        android:textColor="@color/white"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
-    </EditText>
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:hintEnabled="false"
+        app:boxBackgroundColor="#FFFFFF"
+        app:boxCornerRadiusTopStart="24dp"
+        app:boxCornerRadiusTopEnd="24dp"
+        app:boxCornerRadiusBottomStart="24dp"
+        app:boxCornerRadiusBottomEnd="24dp"
+        app:boxStrokeColor="#02a9f4"
+        app:boxStrokeWidth="2dp"
+        app:boxBackgroundMode="outline">
 
-    <EditText
-        android:id="@+id/edt_password"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:gravity="left"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:textColor="#040404"
+            android:hint="Email" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout_password"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@+id/edt_email"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textInputLayout_email"
         android:layout_marginTop="20dp"
-        android:hint="Password"
-        android:textColorHint="@color/white"
-        android:background="@drawable/edit_background"
-        android:paddingLeft="10dp"
-        android:textColor="@color/white"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
-    </EditText>
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:hintEnabled="false"
+        app:boxBackgroundColor="#FFFFFF"
+        app:boxCornerRadiusTopStart="24dp"
+        app:boxCornerRadiusTopEnd="24dp"
+        app:boxCornerRadiusBottomStart="24dp"
+        app:boxCornerRadiusBottomEnd="24dp"
+        app:boxStrokeColor="#02a9f4"
+        app:boxStrokeWidth="2dp"
+        app:boxBackgroundMode="outline"
+        app:passwordToggleEnabled="true">
 
-    <Button
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:gravity="left"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:textColor="#040404"
+            android:hint="Password" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_password"
-        android:background="@drawable/edit_background"
+        android:background="@drawable/greenbutton"
+        app:backgroundTint="@null"
+        app:cornerRadius="24dp"
         android:text="Login"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true">
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:layout_marginTop="350dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif"
+        android:elevation="4dp">
+    </com.google.android.material.button.MaterialButton>
 
-    </Button>
 
-    <Button
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnLogin"
-        android:background="@drawable/edit_background"
+        android:background="@drawable/bluebutton"
+        app:backgroundTint="@null"
+        app:cornerRadius="24dp"
         android:text="Sign Up"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
         android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true">
-    </Button>
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif"
+        android:elevation="4dp">
+    </com.google.android.material.button.MaterialButton>
 
-    <Button
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnForgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnSignup"
-        android:background="@drawable/edit_background"
-        android:layout_marginTop="10dp"
+        android:background="@drawable/redbutton"
+        app:backgroundTint="@null"
+        app:cornerRadius="24dp"
         android:text="Forgot Password?"
-        android:layout_centerHorizontal="true">
-    </Button>
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif"
+        android:elevation="4dp">
+    </com.google.android.material.button.MaterialButton>
+
 
 </RelativeLayout>

@@ -1,10 +1,8 @@
 package com.example.lfgg
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
@@ -12,7 +10,6 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
 
 class SignUp : AppCompatActivity() {
 
@@ -38,7 +35,6 @@ class SignUp : AppCompatActivity() {
         btnSignUp = findViewById(R.id.btnSignup)
         spnPlatform = findViewById(R.id.spn_platform)
         spnGames = findViewById(R.id.spn_games)
-
 
         btnSignUp.setOnClickListener {
             val user = edtUser.text.toString()
