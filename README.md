@@ -1,4 +1,4 @@
-# LFGG - Looking For Good/Great Group
+# LFGG - Looking For Good Game
 
 LFGG is an Android app designed to help gamers find the perfect group to play games with. Built using native Kotlin 🤖 and Firebase 🔥.
 
