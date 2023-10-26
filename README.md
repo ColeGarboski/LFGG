@@ -52,4 +52,4 @@ See also the list of [contributors](https://github.com/ColeGarboski/LFGG/contrib
 ## Acknowledgments
 
 - We ❤️ Dastan Banae for guiding our project's development.
-- 
+- This project was for the CS-204 Project Development Class @ SNHU 💙💛
